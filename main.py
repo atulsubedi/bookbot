@@ -1,9 +1,19 @@
 def main():
-  file_contents = open_book("books/frankenstein.txt")  
-  words = num_of_word_of_books(file_contents)
-  print(f"there are {words} in the book")
-  word_dict = count_each_words(file_contents)
-  print(word_dict)
+  path = open_book("books/frankenstein.txt")  
+  words = num_of_word_of_books(path)
+  word_dict = count_each_words(path)
+  dict_sorted_list = chars_dict_to_sorted_list(word_dict)
+  
+  print(f"--- Begin report of the book ---")
+  print(f"There are {words} in the book")
+  print()
+  for item in dict_sorted_list:
+        if not item["char"].isalpha():
+            continue
+        print(f"The '{item['char']}' character was found {item['num']} times")
+
+  print("--- End report ---") 
+
 def open_book(path):
     with open(path) as f:
      return  f.read()
@@ -21,5 +31,15 @@ def count_each_words(txt):
         else:
             word[lowered] = 1
     return word
+def sort_on(d):
+    return d["num"]
+
+
+def chars_dict_to_sorted_list(num_chars_dict):
+    sorted_list = []
+    for ch in num_chars_dict:
+        sorted_list.append({"char": ch, "num": num_chars_dict[ch]})
+    sorted_list.sort(reverse=True, key=sort_on)
+    return sorted_list
 
 main()
