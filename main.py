@@ -2,11 +2,8 @@ def main():
   file_contents = open_book("books/frankenstein.txt")  
   words = num_of_word_of_books(file_contents)
   print(f"there are {words} in the book")
-   
-   
-   
-   
-   
+  word_dict = count_each_words(file_contents)
+  print(word_dict)
 def open_book(path):
     with open(path) as f:
      return  f.read()
@@ -14,3 +11,15 @@ def open_book(path):
 def num_of_word_of_books(txt):
     words = txt.split()
     return len(words)
+
+def count_each_words(txt):
+    word = {}
+    for c in txt:
+        lowered = c.lower()
+        if lowered in word:
+            word[lowered] += 1
+        else:
+            word[lowered] = 1
+    return word
+
+main()
